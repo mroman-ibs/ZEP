@@ -76,6 +76,40 @@
 
 PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approximation=FALSE,method="NearestEuclidean",...)
 {
+  # checking parameters
+  
+  if((length(value) != 1) || (!isFuzzyNumber(value)))
+  {
+    stop("Parameter value should be a single fuzzy number!")
+    
+  }
+  
+  if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
+  {
+    stop("Parameter method should be a proper name of approximation method!")
+  }
+  
+  if((length(knots) != 1) || !IfInteger(knots))
+  {
+    stop("Parameter knots should be a single integer value!")
+  }
+  
+  if((length(approximation) != 1) || !is.logical(approximation))
+  {
+    stop("Parameter approximation should be a single logical value!")
+  }
+  
+  if((length(grid) != 1) || !is.logical(grid))
+  {
+    stop("Parameter grid should be a single logical value!")
+  }
+  
+  if((length(alternate) != 1) || !is.logical(alternate))
+  {
+    stop("Parameter alternate should be a single logical value!")
+  }
+  
+  
   # prepare layout of the plots
   
   graphics::layout(mat = matrix(c(3, 4, 2, 1), nrow = 2, ncol = 2))  

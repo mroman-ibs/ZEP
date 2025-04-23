@@ -56,6 +56,21 @@
 
 FuzzyApproximation <- function(value,method="ExpectedValueCore",...)
 {
+  # checking parameters
+  
+  if((length(value) != 1) || (!isFuzzyNumber(value)))
+  {
+    stop("Parameter value should be a single fuzzy number!")
+    
+  }
+  
+  if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
+  {
+    stop("Parameter method should be a proper name of approximation method!")
+  }
+  
+  
+  
   if(method=="ExpectedValueCore") {
     
     # apply the Expected-Value and Core Preserving Method

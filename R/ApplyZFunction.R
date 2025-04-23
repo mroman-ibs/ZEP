@@ -69,6 +69,29 @@
 
 ApplyZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",...)
 {
+  # checking parameters
+  
+  if((length(value) != 1) || (!isFuzzyNumber(value)))
+  {
+    stop("Parameter value should be a single fuzzy number!")
+    
+  }
+  
+  if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
+  {
+    stop("Parameter method should be a proper name of approximation method!")
+  }
+  
+  if((length(knots) != 1) || !IfInteger(knots))
+  {
+    stop("Parameter knots should be a single integer value!")
+  }
+  
+  if((length(approximation) != 1) || !is.logical(approximation))
+  {
+    stop("Parameter approximation should be a single logical value!")
+  }
+  
   # values for alpha-cuts
   
   alphas <- seq(0,1,len=knots+2)

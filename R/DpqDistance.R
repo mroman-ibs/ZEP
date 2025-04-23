@@ -57,6 +57,31 @@
 DpqDistance <- function(value1,value2,p=2,q=1/2)
 {
   
+  # checking parameters
+  
+  if((length(value1) != 1) || (!isFuzzyNumber(value1)))
+  {
+    stop("Parameter value1 should be a single fuzzy number!")
+    
+  }
+  
+  if((length(value2) != 1) || (!isFuzzyNumber(value2)))
+  {
+    stop("Parameter value2 should be a single fuzzy number!")
+    
+  }
+  
+  if(length(p)!=1 || !is.numeric(p) || p<=0)
+  {
+    stop("Parameter p should be a single numeric value!")
+  }
+  
+  if(length(q)!=1 || !is.numeric(q) || q<=0)
+  {
+    stop("Parameter q should be a single numeric value!")
+  }
+  
+  
   lowers <- function(alpha) 
     abs( FuzzyNumbers::alphacut(value1,alpha)[1]-FuzzyNumbers::alphacut(value2,alpha)[1] )^p
   
