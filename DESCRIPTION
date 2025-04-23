@@ -2,19 +2,20 @@ Package: ZEP
 Type: Package
 Title: Procedures related to the Zadeh's Extension Principle for fuzzy data
 Version: 0.1.0
-Authors@R: Authors@R: c(
+Authors@R: c(
     person("Maciej", "Romaniuk", email = "mroman@ibspan.waw.pl",
-    role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X", "(Systems Research Institute Polish Academy of Sciences, Newelska 6, 01-447 Warszawa, Poland)"),
-    person("Abbas", "Parchami", email = "parchami@uk.ac.ir", role = c("cre","aut"),
-    comment = c(ORCID = "0000-0002-0593-7324", "(Mahani Math Center, Afzalipour Research Institute, Shahid Bahonar University of Kerman, Kerman, Iran)"),
+    role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X",
+    "(Systems Research Institute Polish Academy of Sciences, Newelska 6, 01-447 Warszawa, Poland)")),
+    person("Abbas", "Parchami", email = "parchami@uk.ac.ir", role = "aut",
+    comment = c(ORCID = "0000-0002-0593-7324", 
+    "(Mahani Math Center, Afzalipour Research Institute, Shahid Bahonar University of Kerman, Kerman, Iran)")),
     person("Przemyslaw", "Grzegorzewski", email = "przemyslaw.grzegorzewski@ibspan.waw.pl",
-    role = "aut",comment = c(ORCID = "0000-0002-5191-4123",
-    "(Faculty of Mathematics and Information Science, Warsaw University of Technology, Koszykowa 75, 00-662 Warsaw, Poland)")
-    )
+    role = "ctb",comment = c(ORCID = "0000-0002-5191-4123",
+    "(Faculty of Mathematics and Information Science, Warsaw University of Technology, Koszykowa 75, 00-662 Warsaw, Poland)")))
 Description: Procedures for calculation, plotting, and approximation of the outputs for fuzzy numbers based on the Zadeh's Extension Principle.
-License: GPL-3
+License: GPL-3 + file LICENSE
 NeedsCompilation: yes
-Imports: methods, FuzzyNumbers
+Imports: FuzzyNumbers, autoimage
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

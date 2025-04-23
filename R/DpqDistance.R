@@ -60,12 +60,12 @@ DpqDistance <- function(value1,value2,p=2,q=1/2)
   lowers <- function(alpha) 
     abs( FuzzyNumbers::alphacut(value1,alpha)[1]-FuzzyNumbers::alphacut(value2,alpha)[1] )^p
   
-  L <- integrate(Vectorize(lowers), lower=0, upper=1)$value
+  L <- stats::integrate(Vectorize(lowers), lower=0, upper=1)$value
   
   uppers <- function(alpha) 
     abs( FuzzyNumbers::alphacut(value1,alpha)[2]-FuzzyNumbers::alphacut(value2,alpha)[2] )^p
   
-  U <- integrate(Vectorize(uppers), lower=0, upper=1)$value
+  U <- stats::integrate(Vectorize(uppers), lower=0, upper=1)$value
   
   return( ( (1-q)*L + q*U )^(1/p) )
 }
