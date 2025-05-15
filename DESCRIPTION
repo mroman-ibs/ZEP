@@ -1,7 +1,7 @@
 Package: ZEP
 Type: Package
 Title: Procedures Related to the Zadeh's Extension Principle for Fuzzy Data
-Version: 0.1.1
+Version: 0.1.4
 Authors@R: c(
     person("Maciej", "Romaniuk", email = "mroman@ibspan.waw.pl",
     role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X",
@@ -12,10 +12,10 @@ Authors@R: c(
     person("Przemyslaw", "Grzegorzewski", email = "przemyslaw.grzegorzewski@ibspan.waw.pl",
     role = "ctb",comment = c(ORCID = "0000-0002-5191-4123",
     "(Faculty of Mathematics and Information Science, Warsaw University of Technology, Koszykowa 75, 00-662 Warsaw, Poland)")))
-Description: Procedures for calculation, plotting, and approximation of the outputs for fuzzy numbers (see A.I. Ban, L. Coroianu, P. Grzegorzewski "Fuzzy Numbers: Approximations, Ranking and Applications" (2015)) based on the Zadeh's Extension Principle (see de Barros, L.C., Bassanezi, R.C., Lodwick, W.A. (2017) <doi.org/10.1007/978-3-662-53324-6_2>).
+Description: Procedures for calculation, plotting, and approximation of the outputs for fuzzy numbers (see A.I. Ban, L. Coroianu, P. Grzegorzewski "Fuzzy Numbers: Approximations, Ranking and Applications" (2015)) based on the Zadeh's Extension Principle (see de Barros, L.C., Bassanezi, R.C., Lodwick, W.A. (2017) <doi:10.1007/978-3-662-53324-6_2>).
 License: GPL-3
-NeedsCompilation: yes
-Imports: FuzzyNumbers, autoimage, methods
+NeedsCompilation: no
+Imports: FuzzyNumbers, methods
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

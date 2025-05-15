@@ -109,6 +109,11 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     stop("Parameter alternate should be a single logical value!")
   }
   
+  # saving par
+  
+  oldpar <- graphics::par(no.readonly = TRUE)
+  
+  on.exit(graphics::par(oldpar))
   
   # prepare layout of the plots
   
@@ -243,6 +248,5 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
   }
   
-  autoimage::reset.par()
   
 }
