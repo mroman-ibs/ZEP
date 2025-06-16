@@ -124,7 +124,7 @@ ApplyZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="Neares
     
   
     temp <- c(FUN(leftBounds[n]),FUN(rightBounds[n]))
-      
+    
     newLeftBounds[n] <- min(c(stats::optimize(f=FUN,interval = c(leftBounds[n],rightBounds[n]))$objective,temp))
     
     newRightBounds[n] <- max(c(stats::optimize(f=FUN,interval = c(leftBounds[n],rightBounds[n]),maximum = TRUE)$objective,temp))
@@ -136,17 +136,45 @@ ApplyZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="Neares
   
   for(i in (n-1):1) {
     
-    # cat("bounds: ", c(leftBounds[i],rightBounds[i]), "\n")
+    # cat("bounds ", i, " :", c(leftBounds[i],rightBounds[i]), "\n")
+    # 
+    # cat("bounds ", i+1, " :", c(leftBounds[i+1],rightBounds[i+1]), "\n")
     
     temp <- c(FUN(leftBounds[i]),FUN(rightBounds[i]),newLeftBounds[i+1],newRightBounds[i+1])
     
-    newLeftBounds[i] <- min(c(stats::optimize(f=FUN,interval = c(leftBounds[i],leftBounds[i+1]))$objective,
-                              stats::optimize(f=FUN,interval = c(rightBounds[i+1],rightBounds[i]))$objective,
-                              temp))
+    # check if intervals are not reduced to the point and add new values
     
-    newRightBounds[i] <- max(c(stats::optimize(f=FUN,interval = c(leftBounds[i],leftBounds[i+1]),maximum = TRUE)$objective,
-                               stats::optimize(f=FUN,interval = c(rightBounds[i+1],rightBounds[i]),maximum = TRUE)$objective,
-                              temp))
+    if(leftBounds[i] != leftBounds[i+1]) {
+      
+      temp <- c(temp, stats::optimize(f=FUN,interval = c(leftBounds[i],leftBounds[i+1]))$objective)
+      
+    } 
+    
+    if(rightBounds[i] != rightBounds[i+1]) {
+      
+      temp <- c(temp, stats::optimize(f=FUN,interval = c(rightBounds[i+1],rightBounds[i]))$objective)
+      
+    }
+    
+    newLeftBounds[i] <- min(temp)
+    
+    temp <- c(FUN(leftBounds[i]),FUN(rightBounds[i]),newLeftBounds[i+1],newRightBounds[i+1])
+    
+    # check if intervals are not reduced to the point and add new values
+    
+    if(leftBounds[i] != leftBounds[i+1]) {
+      
+      temp <- c(temp, stats::optimize(f=FUN,interval = c(leftBounds[i],leftBounds[i+1]),maximum = TRUE)$objective)
+      
+    } 
+    
+    if(rightBounds[i] != rightBounds[i+1]) {
+      
+      temp <- c(temp, stats::optimize(f=FUN,interval = c(rightBounds[i+1],rightBounds[i]),maximum = TRUE)$objective)
+      
+    }
+
+    newRightBounds[i] <- max(temp)
     
   }
   
