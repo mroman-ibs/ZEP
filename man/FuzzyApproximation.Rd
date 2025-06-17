@@ -11,7 +11,7 @@ FuzzyApproximation(value, method = "ExpectedValueCore", ...)
 
 \item{method}{The selected approximation method.}
 
-\item{...}{Additional parameters passed to other functions.}
+\item{...}{Additional parameters passed to other functions (like approximation method from the FuzzyNumbers package).}
 }
 \value{
 The output is a fuzzy number (triangular or trapezoidal one) described by
@@ -24,7 +24,9 @@ classes from \code{FuzzyNumbers} package.
 The function approximates the fuzzy number given by \code{value} with the method selected by
 \code{method}. The following approximations are possible: \code{ExpectedValueCore}--preserving the
 expected value and the core of \code{value}, \code{TriangularSupportDist}--constructs the
-triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value}.
+triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value},
+and the approximation methods from the FuzzyNumbers package (namely: \code{Naive, NearestEuclidean, ExpectedIntervalPreserving,
+SupportCoreRestricted}).
 
 The input value should be given by a fuzzy number described by classes from \code{FuzzyNumbers} package.
 }

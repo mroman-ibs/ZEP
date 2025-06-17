@@ -7,7 +7,9 @@
 #' The function approximates the fuzzy number given by \code{value} with the method selected by
 #' \code{method}. The following approximations are possible: \code{ExpectedValueCore}--preserving the
 #' expected value and the core of \code{value}, \code{TriangularSupportDist}--constructs the
-#' triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value}.
+#' triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value},
+#' and the approximation methods from the FuzzyNumbers package (namely: \code{Naive, NearestEuclidean, ExpectedIntervalPreserving,
+#' SupportCoreRestricted}).
 #' 
 #'  
 #' 
@@ -29,7 +31,7 @@
 #'
 #' @param method The selected approximation method.
 #' 
-#' @param ... Additional parameters passed to other functions.
+#' @param ... Additional parameters passed to other functions (like approximation method from the FuzzyNumbers package).
 #' 
 #' 
 #'
@@ -107,6 +109,14 @@ FuzzyApproximation <- function(value,method="ExpectedValueCore",...)
     output <- FuzzyNumbers::TriangularFuzzyNumber(FuzzyNumbers::supp(value)[1],
                                                   optimCore,FuzzyNumbers::supp(value)[2])
      
+    
+  }
+  
+  # use approximation methods from FuzzyNumbers package
+  
+  if(method %in% approximationMehodsOutside) {
+ 
+    output <- FuzzyNumbers::piecewiseLinearApproximation(value, method=method)
     
   }
   
