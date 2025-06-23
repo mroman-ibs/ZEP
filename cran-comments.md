@@ -2,6 +2,7 @@ I have prepared the new version (0.1.5) of my package.
 
 * Main changes:
 - Fixed errors in ApplyZFunction.
+- Added approximation methods from FuzzyNumbers package.
 
 I have prepared the new version (0.1.4) of my package. 
 
