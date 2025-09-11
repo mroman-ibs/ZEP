@@ -4,12 +4,15 @@
 \alias{FuzzyApproximation}
 \title{Function for approximation with the help of methods other than in FuzzyNumbers package}
 \usage{
-FuzzyApproximation(value, method = "ExpectedValueCore", ...)
+FuzzyApproximation(value, method = "ExpectedValueCore", piecewise = FALSE, ...)
 }
 \arguments{
 \item{value}{Fuzzy number to approximate.}
 
 \item{method}{The selected approximation method.}
+
+\item{piecewise}{If \code{piecewise=TRUE} is set, then the methods "Naive","NearestEuclidean" (from the FuzzyNumbers package) produce piecewise linear fuzzy number as the
+output, otherwise they result in trapezoidal fuzzy number.}
 
 \item{...}{Additional parameters passed to other functions (like approximation method from the FuzzyNumbers package).}
 }
@@ -26,7 +29,7 @@ The function approximates the fuzzy number given by \code{value} with the method
 expected value and the core of \code{value}, \code{TriangularSupportDist}--constructs the
 triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value},
 and the approximation methods from the FuzzyNumbers package (namely: \code{Naive, NearestEuclidean, ExpectedIntervalPreserving,
-SupportCoreRestricted}).
+SupportCoreRestricted,SupportCorePreserving}).
 
 The input value should be given by a fuzzy number described by classes from \code{FuzzyNumbers} package.
 }

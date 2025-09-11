@@ -9,7 +9,7 @@
 #' expected value and the core of \code{value}, \code{TriangularSupportDist}--constructs the
 #' triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value},
 #' and the approximation methods from the FuzzyNumbers package (namely: \code{Naive, NearestEuclidean, ExpectedIntervalPreserving,
-#' SupportCoreRestricted}).
+#' SupportCoreRestricted,SupportCorePreserving}).
 #' 
 #'  
 #' 
@@ -30,6 +30,9 @@
 #'
 #'
 #' @param method The selected approximation method.
+#'
+#' @param piecewise If \code{piecewise=TRUE} is set, then the methods "Naive","NearestEuclidean" (from the FuzzyNumbers package) produce piecewise linear fuzzy number as the
+#'  output, otherwise they result in trapezoidal fuzzy number.
 #' 
 #' @param ... Additional parameters passed to other functions (like approximation method from the FuzzyNumbers package).
 #' 
@@ -56,7 +59,7 @@
 #' @export
 
 
-FuzzyApproximation <- function(value,method="ExpectedValueCore",...)
+FuzzyApproximation <- function(value,method="ExpectedValueCore",piecewise=FALSE,...)
 {
   # checking parameters
   
@@ -112,11 +115,31 @@ FuzzyApproximation <- function(value,method="ExpectedValueCore",...)
     
   }
   
-  # use approximation methods from FuzzyNumbers package
+  # use various approximation methods from FuzzyNumbers package regarding the method and piecewise parameter
   
-  if(method %in% approximationMehodsOutside) {
+  if(method %in% c("SupportCoreRestricted","ExpectedIntervalPreserving")) {
+    
+    output <- FuzzyNumbers::trapezoidalApproximation(value, method=method,...)
+    
+  }
+  
+  if((method %in% c("Naive","NearestEuclidean")) && piecewise==FALSE) {
+    
+    output <- FuzzyNumbers::trapezoidalApproximation(value, method=method,...)
+    
+  }
+  
+  
+  
+  if((method %in% c("Naive","NearestEuclidean")) && piecewise==TRUE) {
  
-    output <- FuzzyNumbers::piecewiseLinearApproximation(value, method=method)
+    output <- FuzzyNumbers::piecewiseLinearApproximation(value, method=method,...)
+    
+  }
+  
+  if(method=="SupportCorePreserving") {
+    
+    output <- FuzzyNumbers::piecewiseLinearApproximation(value, method=method,...)
     
   }
   

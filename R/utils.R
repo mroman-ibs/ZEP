@@ -1,6 +1,6 @@
 # approximation methods from FuzzyNumbers package
 
-approximationMehodsOutside <- c("Naive","NearestEuclidean","SupportCorePreserving")
+approximationMehodsOutside <- c("Naive","NearestEuclidean","SupportCorePreserving","ExpectedIntervalPreserving","SupportCoreRestricted")
 
 # function to check if the parameter is given by the integer
 

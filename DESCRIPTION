@@ -1,7 +1,7 @@
 Package: ZEP
 Type: Package
 Title: Procedures Related to the Zadeh's Extension Principle for Fuzzy Data
-Version: 0.1.5
+Version: 0.2.0
 Authors@R: c(
     person("Maciej", "Romaniuk", email = "mroman@ibspan.waw.pl",
     role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X",

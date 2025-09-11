@@ -1,3 +1,9 @@
+I have prepared the new version (0.2.0) of my package. 
+
+* Main changes:
+- Added new approximation methods from FuzzyNumbers package.
+- Added tests with testthat package.
+
 I have prepared the new version (0.1.5) of my package. 
 
 * Main changes:
