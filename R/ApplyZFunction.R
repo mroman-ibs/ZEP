@@ -77,14 +77,19 @@ ApplyZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="Neares
     
   }
   
+  if(length(method) != 1)
+  {
+    stop("Parameter method should be a single value!")
+  }
+  
   if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
   {
     stop("Parameter method should be a proper name of approximation method!")
   }
   
-  if((length(knots) != 1) || !IfInteger(knots))
+  if((length(knots) != 1) || !IfInteger(knots) || knots <= 0)
   {
-    stop("Parameter knots should be a single integer value!")
+    stop("Parameter knots should be a single, positive integer value!")
   }
   
   if((length(approximation) != 1) || !is.logical(approximation))

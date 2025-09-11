@@ -69,11 +69,24 @@ FuzzyApproximation <- function(value,method="ExpectedValueCore",piecewise=FALSE,
     
   }
   
+  if(length(method) != 1)
+  {
+    stop("Parameter method should be a single value!")
+  }
+  
   if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
   {
     stop("Parameter method should be a proper name of approximation method!")
   }
   
+  
+  
+  if((length(piecewise) != 1) || (!is.logical(piecewise)))
+  {
+    
+    stop("Parameter piecewise should be a single logical value!")
+    
+  }
   
   
   if(method=="ExpectedValueCore") {
