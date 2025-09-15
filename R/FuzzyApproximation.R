@@ -128,6 +128,14 @@ FuzzyApproximation <- function(value,method="ExpectedValueCore",piecewise=FALSE,
     
   }
   
+  # apply the approximation with preserving the ambiguity and value
+  
+  if(method == "AmbiguityValuePreserving") {
+    
+    output <- ApproximationAmbValPres(value,...)
+    
+  }
+  
   # use various approximation methods from FuzzyNumbers package regarding the method and piecewise parameter
   
   if(method %in% c("SupportCoreRestricted","ExpectedIntervalPreserving")) {

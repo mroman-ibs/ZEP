@@ -19,4 +19,4 @@
 
 # approximation methods from this package
 
-approximationMehodsInside <- c("ExpectedValueCore","TriangularSupportDist")
+approximationMehodsInside <- c("ExpectedValueCore","TriangularSupportDist","AmbiguityValuePreserving")
