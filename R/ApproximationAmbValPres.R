@@ -1,9 +1,6 @@
-#' Approximation method preserving the ambiguity and value
-#'
-#' @description
-#' `ApproximationAmbValPres` applies the aproximation preserving ambiguity and value
-#'
-#' 
+# Approximation method preserving the ambiguity and value
+#
+ 
 
 ApproximationAmbValPres <- function(value,...)
 {

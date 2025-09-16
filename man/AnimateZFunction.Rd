@@ -4,9 +4,68 @@
 \alias{AnimateZFunction}
 \title{Animate output for the Zadeh's principle}
 \usage{
-AnimateZFunction(value, FUN, knots = 10, ...)
+AnimateZFunction(
+  value,
+  FUN,
+  knots = 10,
+  approximation = FALSE,
+  method = "NearestEuclidean",
+  ...
+)
+}
+\arguments{
+\item{value}{Input fuzzy number.}
+
+\item{FUN}{Function used for the input fuzzy number with the help of the Zadeh's principle.}
+
+\item{knots}{Number of the alpha-cuts used during calculation of the output.}
+
+\item{approximation}{If \code{TRUE}, the approximated output is calculated.}
+
+\item{method}{The selected approximation method.}
+
+\item{...}{Additional parameters passed to other functions.}
+}
+\value{
+One (or two) figures are animated: the output fuzzy number (for the Zadeh's principle
+and the applied function), and its approximation (if selected).
 }
 \description{
-`AnimateZFunction` applies the selected function to a fuzzy number using the Zadeh's principle, and then animates
+\code{AnimateZFunction} applies the selected function to a fuzzy number using the Zadeh's principle, and then animates
 the output.
+}
+\details{
+The function takes the input fuzzy number \code{value} (which should be described by one of the
+classes from \code{FuzzyNumbers} package) and applies the function \code{FUN} using
+the Zadeh's principle. The output is given by a fuzzy number or its approximation (when
+\code{approximation} is set to \code{TRUE} and the respective \code{method} is selected).
+To properly find the output, value of \code{FUN} is calculated for many alpha-cuts of \code{value}.
+The number of these alpha-cuts is equal to \code{knots} (plus 2 for the support and the core).
+The output fuzzy number and its approximation are animated for the decreasing value of \code{alpha} (i.e., the consecutive alpha-cuts).
+If the approximation is used, then the approximated fuzzy number is shown with green line.
+
+The input fuzzy number \code{value} should be given by fuzzy number described by classes from \code{FuzzyNumbers} package.
+}
+\examples{
+
+library(FuzzyNumbers)
+
+# prepare complex fuzzy number
+
+A <- FuzzyNumber(-5, 3, 6, 20, left=function(x)
+pbeta(x,0.4,3),
+right=function(x) 1-x^(1/4),
+lower=function(alpha) qbeta(alpha,0.4,3),
+upper=function(alpha) (1-alpha)^4)
+
+# animate the output fuzzy number
+
+AnimateZFunction(A,FUN=function(x)x^3+2*x^2-1)
+
+# find and animate the approximated output via the Zadeh's principle
+
+AnimateZFunction(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
+
+
+
 }
