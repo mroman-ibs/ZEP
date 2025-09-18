@@ -1,3 +1,8 @@
+I have prepared the new version (0.2.1) of my package. 
+
+* Main changes:
+- Improved help files.
+
 I have prepared the new version (0.2.0) of my package. 
 
 * Main changes:

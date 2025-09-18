@@ -8,6 +8,7 @@
 #' \code{method}. The following approximations are possible: \code{ExpectedValueCore}--preserving the
 #' expected value and the core of \code{value}, \code{TriangularSupportDist}--constructs the
 #' triangular fuzzy number based on minimization of \code{DpqDistance}, preserving the support of \code{value},
+#' \code{AmbiguityValuePreserving}--minimizing the Euclidean distance, while preserving the ambiguity and value,
 #' and the approximation methods from the FuzzyNumbers package (namely: \code{Naive, NearestEuclidean, ExpectedIntervalPreserving,
 #' SupportCoreRestricted,SupportCorePreserving}).
 #' 
