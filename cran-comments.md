@@ -1,4 +1,4 @@
-I have prepared the new version (0.2.2) of my package. 
+I have prepared the new version (0.2.3) of my package. 
 
 * Main changes:
 - Improved help files.

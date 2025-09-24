@@ -20,8 +20,8 @@
 #' 
 #'
 #' @return
-#' One (or two) figures are animated: the series of the output fuzzy numbers (for the Zadeh's principle
-#' and the applied function), and their approximation (if selected).
+#' The figures are animated: the series of the input and output fuzzy numbers (for the Zadeh's principle
+#' and the applied function) or their approximation (if selected).
 #'
 #'
 #'
@@ -40,7 +40,7 @@
 #'
 #' @param method The selected approximation method.
 #' 
-#' @param interval Interval between frames in the animation.
+#' @param sleep Interval between frames in the animation.
 #' 
 #' @param ... Additional parameters passed to other functions.
 #'
@@ -80,16 +80,48 @@
 
 
 
-AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,method="NearestEuclidean",interval=1,...)
+AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,method="NearestEuclidean",sleep=1,...)
 {
+  
+  # checking parameters
+  
+  if(!is.list(listOfValues))
+  {
+    stop("Parameter listOfValues should be a list of fuzzy numbers!")
+    
+  }
+  
+  if(length(method) != 1)
+  {
+    stop("Parameter method should be a single value!")
+  }
+  
+  if(!(method %in% c(approximationMehodsInside,approximationMehodsOutside)))
+  {
+    stop("Parameter method should be a proper name of approximation method!")
+  }
+  
+  if((length(knots) != 1) || !IfInteger(knots) || knots <= 0)
+  {
+    stop("Parameter knots should be a single, positive integer value!")
+  }
+  
+  if((length(approximation) != 1) || !is.logical(approximation))
+  {
+    stop("Parameter approximation should be a single logical value!")
+  }
+  
+  if((length(sleep) != 1) || !is.numeric(sleep) || sleep <= 0)
+  {
+    stop("Parameter sleep should be a single positive real value!")
+  }
+  
   
   # saving par
   
   oldpar <- graphics::par(no.readonly = TRUE)
   
   on.exit(graphics::par(oldpar))
-  
-  graphics::plot.new()
   
   graphics::layout(mat = matrix(c(3, 4, 2, 1), nrow = 2, ncol = 2))  
   
@@ -185,6 +217,8 @@ AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,m
     
     graphics::abline(h=FuzzyNumbers::core(valueZFun), col=4, lty=3)
     
+    # graphics::par(mfrow = c(1, 1))
+    
     
   }
   
@@ -207,7 +241,7 @@ AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,m
   
   # prepare animation 
   
-  oopt <- animation::ani.options(interval=interval, nmax = length(listOfValues))
+  oopt <- animation::ani.options(interval=sleep, nmax = length(listOfValues))
   
   for(i in seq_len(animation::ani.options("nmax"))) {
     
@@ -223,8 +257,8 @@ AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,m
   
   animation::ani.options(oopt)
   
-  graphics::par(mfrow = c(1, 1))
+  # graphics::par(mfrow = c(1, 1))
   
-  return(0)
+  # return(0)
   
 }

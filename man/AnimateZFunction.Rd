@@ -10,7 +10,7 @@ AnimateZFunction(
   knots = 10,
   approximation = FALSE,
   method = "NearestEuclidean",
-  interval = 0.05,
+  sleep = 0.05,
   ...
 )
 }
@@ -25,7 +25,7 @@ AnimateZFunction(
 
 \item{method}{The selected approximation method.}
 
-\item{interval}{Interval between frames in the animation.}
+\item{sleep}{Interval between frames in the animation.}
 
 \item{...}{Additional parameters passed to other functions.}
 }
