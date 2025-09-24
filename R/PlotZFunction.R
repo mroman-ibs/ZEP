@@ -128,17 +128,17 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
   {
     FuzzyNumbers::plot(value,main="value",...)
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     graphics::curve(FUN,xlim = FuzzyNumbers::supp(value),col="red",ylab="y",main="FUN",...)
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     outputFunction <- ApplyZFunction(value,FUN = FUN, knots = knots)
     
     FuzzyNumbers::plot(outputFunction,main="FUN(value)",col="blue",...)
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     # add approximation if selected
     
@@ -148,7 +148,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
       
       FuzzyNumbers::plot(outputFunctionApprox,main="Approx(FUN(value))",col="green",...)
       
-      if(grid==TRUE) grid()
+      if(grid==TRUE) graphics::grid()
       
     }
     
@@ -168,9 +168,9 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     # first figure (value)
     
-    graphics::par(mar=c(.8,.8,1.8,1.8)) 
+    graphics::par(mar=c(0.8,0.8,1.8,1.8)) 
     layout.matrix <- matrix(c(3, 0, 2, 1), nrow = 2, ncol = 2) 
-    graphics::layout(mat = layout.matrix, #The order of drowing plots
+    graphics::layout(mat = layout.matrix, #The order of drawing plots
            heights=c(2,1),      #Heights of the two rows
            widths=c(1,2))       #Widths of the two columns
     #layout.show(3)
@@ -182,7 +182,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     graphics::Axis(side=3, labels=FALSE)
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     graphics::abline(v=FuzzyNumbers::core(value), col=4, lty=3)
     
@@ -208,7 +208,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     graphics::curve(FUN, col=2, xlab=NA, ylab=NA, xlim=xlimVal, ylim=suppValueZFun, main=substitute(paste(bold('FUN'))))
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     graphics::abline(v=FuzzyNumbers::core(value), h=FuzzyNumbers::core(valueZFun), col=4, lty=3)
     
@@ -246,12 +246,13 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     graphics::Axis(side=4, labels=FALSE)
     
-    if(grid==TRUE) grid()
+    if(grid==TRUE) graphics::grid()
     
     graphics::abline(h=FuzzyNumbers::core(valueZFun), col=4, lty=3)
     
     
   }
   
+  graphics::par(mfrow = c(1, 1))
   
 }

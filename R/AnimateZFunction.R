@@ -40,6 +40,8 @@
 #'
 #' @param method The selected approximation method.
 #' 
+#' @param interval Interval between frames in the animation.
+#' 
 #' @param ... Additional parameters passed to other functions.
 #'
 #'
@@ -69,7 +71,7 @@
 #' 
 
 
-AnimateZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",...)
+AnimateZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",interval=0.05,...)
 {
   
   # checking parameters
@@ -98,6 +100,11 @@ AnimateZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="Near
   if((length(approximation) != 1) || !is.logical(approximation))
   {
     stop("Parameter approximation should be a single logical value!")
+  }
+  
+  if((length(interval) != 1) || !is.numeric(interval) || interval <= 0)
+  {
+    stop("Parameter interval should be a single positive real value!")
   }
   
   # calculate alpha-cuts
@@ -135,7 +142,7 @@ AnimateZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="Near
   
   # prepare animation 
   
-  oopt <- animation::ani.options(interval = 0.05, nmax = knots + 2)
+  oopt <- animation::ani.options(interval = interval, nmax = knots + 2)
   
   for(i in seq_len(animation::ani.options("nmax"))) {
     
