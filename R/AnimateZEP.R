@@ -80,7 +80,7 @@
 
 
 
-AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,method="NearestEuclidean",interval=0.5,...)
+AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,method="NearestEuclidean",interval=1,...)
 {
   
   # saving par

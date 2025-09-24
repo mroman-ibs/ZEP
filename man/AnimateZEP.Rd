@@ -11,7 +11,7 @@ AnimateZEP(
   grid = TRUE,
   approximation = FALSE,
   method = "NearestEuclidean",
-  interval = 0.5,
+  interval = 1,
   ...
 )
 
@@ -22,7 +22,7 @@ AnimateZEP(
   grid = TRUE,
   approximation = FALSE,
   method = "NearestEuclidean",
-  interval = 0.5,
+  interval = 1,
   ...
 )
 }
