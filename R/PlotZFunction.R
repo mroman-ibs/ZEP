@@ -41,6 +41,12 @@
 #' @param grid If \code{TRUE}, then additional grid is plotted.
 #' 
 #' @param alternate If \code{TRUE}, the second type of the layout of figures is used.
+#' 
+#' @param xRange If \code{NA}, the support of the input fuzzy number is used for to plot x-axis (first and second plot),
+#'  otherwise the given vector is applied.
+#'  
+#' @param yRange If \code{NA}, the support of the output fuzzy number (or its approximation) is used for to plot x-axis (third and fourth plot),
+#'  otherwise the given vector is applied.  
 #'
 #' @param method The selected approximation method.
 #' 
@@ -74,7 +80,7 @@
 
 # main function to plot input and output for function with the Zadeh's principle
 
-PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approximation=FALSE,method="NearestEuclidean",...)
+PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approximation=FALSE,xRange=NA,yRange=NA,method="NearestEuclidean",...)
 {
   # checking parameters
   
@@ -126,17 +132,45 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
   
   if(alternate==FALSE)
   {
-    FuzzyNumbers::plot(value,main="value",...)
+    if(anyNA(xRange)) {
+      
+      FuzzyNumbers::plot(value,main="value",...)
+      
+    } else {
+      
+      FuzzyNumbers::plot(value,main="value",xlim=xRange,...)
+      
+    }
+    
     
     if(grid==TRUE) graphics::grid()
     
-    graphics::curve(FUN,xlim = FuzzyNumbers::supp(value),col="red",ylab="y",main="FUN",...)
+    if(anyNA(xRange)) {
+      
+      graphics::curve(FUN,xlim = FuzzyNumbers::supp(value),col="red",ylab="y",main="FUN",...)
+      
+    } else {
+      
+      graphics::curve(FUN,xlim = xRange,col="red",ylab="y",main="FUN",...)
+      
+    }
+    
     
     if(grid==TRUE) graphics::grid()
     
     outputFunction <- ApplyZFunction(value,FUN = FUN, knots = knots)
     
-    FuzzyNumbers::plot(outputFunction,main="FUN(value)",col="blue",...)
+    if(anyNA(yRange)) {
+      
+      FuzzyNumbers::plot(outputFunction,main="FUN(value)",col="blue",...)
+      
+    } else {
+      
+      FuzzyNumbers::plot(outputFunction,main="FUN(value)",col="blue",xlim=yRange,...)
+      
+    }
+    
+    
     
     if(grid==TRUE) graphics::grid()
     
@@ -146,7 +180,17 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
       
       outputFunctionApprox <- ApplyZFunction(value,FUN = FUN, knots = knots,approximation = TRUE,method=method,...)
       
-      FuzzyNumbers::plot(outputFunctionApprox,main="Approx(FUN(value))",col="green",...)
+      if(anyNA(yRange)) {
+        
+        FuzzyNumbers::plot(outputFunctionApprox,main="Approx(FUN(value))",col="green",...)
+        
+      } else {
+        
+        FuzzyNumbers::plot(outputFunctionApprox,main="Approx(FUN(value))",col="green",xlim=yRange,...)
+        
+      }
+      
+      
       
       if(grid==TRUE) graphics::grid()
       
@@ -164,7 +208,17 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     rightBounds <- FuzzyNumbers::alphacut(value, alphas)[,"U"]
     
-    xlimVal <- FuzzyNumbers::supp(value)
+    # change limit of the plot
+    
+    if(anyNA(xRange)) {
+      
+      xlimVal <- FuzzyNumbers::supp(value)
+      
+    } else {
+      
+      xlimVal <- xRange
+      
+    }
     
     # first figure (value)
     
@@ -205,6 +259,14 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
       suppValueZFun <- c(min(suppValueZFun[1],suppValueZFunApprox[1]),max(suppValueZFun[2],suppValueZFunApprox[2]))
       
     }
+    
+    # change limit of the plot
+    
+    if(!anyNA(yRange)) {
+      
+      suppValueZFun <- yRange
+      
+    } 
     
     graphics::curve(FUN, col=2, xlab=NA, ylab=NA, xlim=xlimVal, ylim=suppValueZFun, main=substitute(paste(bold('FUN'))))
     

@@ -1,3 +1,8 @@
+I have prepared the new version (0.2.4) of my package. 
+
+* Main changes:
+- Added options for plotting and animation functions.
+
 I have prepared the new version (0.2.3) of my package. 
 
 * Main changes:

@@ -11,6 +11,8 @@ PlotZFunction(
   grid = TRUE,
   alternate = FALSE,
   approximation = FALSE,
+  xRange = NA,
+  yRange = NA,
   method = "NearestEuclidean",
   ...
 )
@@ -27,6 +29,12 @@ PlotZFunction(
 \item{alternate}{If \code{TRUE}, the second type of the layout of figures is used.}
 
 \item{approximation}{If \code{TRUE}, the approximated output is calculated.}
+
+\item{xRange}{If \code{NA}, the support of the input fuzzy number is used for to plot x-axis (first and second plot),
+otherwise the given vector is applied.}
+
+\item{yRange}{If \code{NA}, the support of the output fuzzy number (or its approximation) is used for to plot x-axis (third and fourth plot),
+otherwise the given vector is applied.}
 
 \item{method}{The selected approximation method.}
 
