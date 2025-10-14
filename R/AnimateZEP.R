@@ -1,39 +1,39 @@
-#' Function for animation of the whole list of fuzzy numbers
+#' Animate output for the Zadeh's principle
 #'
 #' @description
-#' `AnimateZEP` animates the whole list consisting of fuzzy numbers.
+#' `AnimateZEP` applies the selected function to a fuzzy number using the Zadeh's principle, and then animates
+#' the output.
 #' 
 #' @details
-#' The function takes the list of input fuzzy numbers \code{listOfValues} (which should be described by one of the 
+#' The function takes the input fuzzy number \code{value} (which should be described by one of the 
 #' classes from \code{FuzzyNumbers} package) and applies the function \code{FUN} using
-#' the Zadeh's principle. The output is given as animation of consecutive fuzzy numbers or their approximations (when 
+#' the Zadeh's principle. The output is given by a fuzzy number or its approximation (when 
 #' \code{approximation} is set to \code{TRUE} and the respective \code{method} is selected).
-#' To properly find the output, value of \code{FUN} is calculated for many alpha-cuts of \code{listOfValues}.
+#' To properly find the output, value of \code{FUN} is calculated for many alpha-cuts of \code{value}.
 #' The number of these alpha-cuts is equal to \code{knots} (plus 2 for the support and the core).
+#' The output fuzzy number and its approximation are animated for the decreasing value of \code{alpha} (i.e., the consecutive alpha-cuts).
 #' If the approximation is used, then the approximated fuzzy number is shown with green line.
 #' 
 #'  
 #' 
-#' The input fuzzy number from a list \code{listOfValues} should be given by fuzzy number described by classes from \code{FuzzyNumbers} package.
+#' The input fuzzy number \code{value} should be given by fuzzy number described by classes from \code{FuzzyNumbers} package.
 #'
 #' @md
 #' 
 #'
 #' @return
-#' The figures are animated: the series of the input and output fuzzy numbers (for the Zadeh's principle
-#' and the applied function) or their approximation (if selected).
+#' One (or two) figures are animated: the output fuzzy number (for the Zadeh's principle
+#' and the applied function), and its approximation (if selected).
 #'
 #'
 #'
 #'
 #'
-#' @param listOfValues List of the input fuzzy numbers.
+#' @param value Input fuzzy number.
 #' 
 #' @param FUN Function used for the input fuzzy number with the help of the Zadeh's principle.
 #' 
 #' @param knots Number of the alpha-cuts used during calculation of the output.
-#' 
-#' @param grid If \code{TRUE}, then additional grid is plotted.
 #' 
 #' @param approximation If \code{TRUE}, the approximated output is calculated.
 #' 
@@ -49,45 +49,36 @@
 #' 
 #' library(FuzzyNumbers)
 #' 
-#' # prepare list of fuzzy numbers
+#' # prepare complex fuzzy number
 #'
-#' a <- seq(0,5,by=1)
+#' A <- FuzzyNumber(-5, 3, 6, 20, left=function(x)
+#' pbeta(x,0.4,3),
+#' right=function(x) 1-x^(1/4),
+#' lower=function(alpha) qbeta(alpha,0.4,3),
+#' upper=function(alpha) (1-alpha)^4)
 #' 
-#' fuzzyList <- list()
+#' # animate the output fuzzy number
 #' 
-#' for (i in 1:length(a)) {
-#'  
-#'  fuzzyList[[i]] <- TrapezoidalFuzzyNumber(i,i+1,2*i+1,3*i+1)
-#'  
-#' }
+#' AnimateZEP(A,FUN=function(x)x^3+2*x^2-1)
 #'
-#' # check the list
-#' fuzzyList
+#' # find and animate the approximated output via the Zadeh's principle
+#' 
+#' AnimateZEP(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
+#' 
+#' 
 #'
-#' # now some animations for various functions and then with approximation
-#' AnimateZEP(fuzzyList,FUN=function(x) x^2)
-#'
-#' AnimateZEP(fuzzyList,FUN=function(x) sin(x))
-#' 
-#' AnimateZEP(fuzzyList,FUN=function(x) x^3+1,approximation = TRUE)
-#' 
-#' 
-#' 
-#' 
 #' @export
 #' 
-#' 
 
 
-
-AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,method="NearestEuclidean",sleep=1,...)
+AnimateZEP <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",sleep=0.05,...)
 {
   
   # checking parameters
   
-  if(!is.list(listOfValues))
+  if((length(value) != 1) || (!isFuzzyNumber(value)))
   {
-    stop("Parameter listOfValues should be a list of fuzzy numbers!")
+    stop("Parameter value should be a single fuzzy number!")
     
   }
   
@@ -116,139 +107,59 @@ AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,m
     stop("Parameter sleep should be a single positive real value!")
   }
   
+  # calculate alpha-cuts
   
-  # saving par
+  alphas <- seq(0,1,len=knots+2)
   
-  oldpar <- graphics::par(no.readonly = TRUE)
+  # prepare the figure
   
-  on.exit(graphics::par(oldpar))
+  valueZFun <- ApplyZEP(value,FUN=FUN,knots=knots,approximation=FALSE,...)
   
-  graphics::layout(mat = matrix(c(3, 4, 2, 1), nrow = 2, ncol = 2))  
+  suppValueZFun <- FuzzyNumbers::supp(valueZFun)
   
-  # modified plotting function
+  leftBoundsZFun <- FuzzyNumbers::alphacut(valueZFun, alphas)[,"L"]
   
-  PlotModified <- function(value,xlimVal1,ylimVal1,FUN,knots,grid,approximation,method,...)
-  {
+  rightBoundsZFun <- FuzzyNumbers::alphacut(valueZFun, alphas)[,"U"]
+  
+  # check supp for approximation case
+  
+  if(approximation) {
     
-    alphas <- seq(0,1,len=knots+2)
+    valueZApproximation <- ApplyZEP(value,FUN=FUN,knots=knots,approximation=TRUE,
+                                          method=method,...)
     
-    leftBounds <- FuzzyNumbers::alphacut(value, alphas)[,"L"]
+    suppValueZFunApprox <- FuzzyNumbers::supp(valueZApproximation)
     
-    rightBounds <- FuzzyNumbers::alphacut(value, alphas)[,"U"]
+    suppValueZFun <- c(min(suppValueZFun[1],suppValueZFunApprox[1]),max(suppValueZFun[2],suppValueZFunApprox[2]))
     
-    xlimVal <- xlimVal1
+    leftBoundsZFunApproximation <- FuzzyNumbers::alphacut(valueZApproximation, alphas)[,"L"]
     
-    # first figure (value)
-    
-    graphics::par(mar=c(.8,.8,1.8,1.8)) 
-    layout.matrix <- matrix(c(3, 0, 2, 1), nrow = 2, ncol = 2) 
-    graphics::layout(mat = layout.matrix, #The order of drowing plots
-                     heights=c(2,1),      #Heights of the two rows
-                     widths=c(1,2))       #Widths of the two columns
-    #layout.show(3)
-    
-    graphics::plot(c(leftBounds,rev(rightBounds)), -c(alphas,rev(alphas)), type='l', axes=FALSE,frame.plot=TRUE,xlim=xlimVal, ylim=c(-1,0),
-                   xlab=substitute(paste(bold('value'))),ylab=NA,...)
-    
-    graphics::Axis(side=2, labels=FALSE)
-    
-    graphics::Axis(side=3, labels=FALSE)
-    
-    if(grid==TRUE) graphics::grid()
-    
-    graphics::abline(v=FuzzyNumbers::core(value), col=4, lty=3)
-    
-    # prepare the second figure
-    
-    valueZFun <- ApplyZFunction(value,FUN=FUN,knots=knots,approximation=FALSE,
-                                method=method,...)
-    
-    
-    # check supp for approximation case
-    
-    if(approximation) {
-      
-      valueZApproximation <- ApplyZFunction(value,FUN=FUN,knots=knots,approximation=TRUE,
-                                            method=method,...)
-      
-    }
-    
-    graphics::curve(FUN, col=2, xlab=NA, ylab=NA, xlim=xlimVal, ylim=ylimVal1, main=substitute(paste(bold('FUN'))))
-    
-    if(grid==TRUE) graphics::grid()
-    
-    graphics::abline(v=FuzzyNumbers::core(value), h=FuzzyNumbers::core(valueZFun), col=4, lty=3)
-    
-    # third figure without approximation
-    
-    leftBoundsZFun <- FuzzyNumbers::alphacut(valueZFun, alphas)[,"L"]
-    
-    rightBoundsZFun <- FuzzyNumbers::alphacut(valueZFun, alphas)[,"U"]
-    
-    graphics::plot(-c(alphas,rev(alphas)),c(leftBoundsZFun,rev(rightBoundsZFun)),  type='l', axes=FALSE,frame.plot=TRUE,ylim=ylimVal1, xlim=c(-1,0),
-                   xlab=NA, main=NA,ylab=NA)
-    
-    if(approximation) {
-      
-      # third figure with approximation
-      
-      leftBoundsZFunApproximation <- FuzzyNumbers::alphacut(valueZApproximation, alphas)[,"L"]
-      
-      rightBoundsZFunApproximation <- FuzzyNumbers::alphacut(valueZApproximation, alphas)[,"U"]
-      
-      graphics::lines(-c(alphas,rev(alphas)),c(leftBoundsZFunApproximation,rev(rightBoundsZFunApproximation)),  type='l', col="green")
-      
-      graphics::title(main=substitute(paste(bold('Approx(FUN(value))'))))
-      
-      
-    } else {
-      
-      # without approximation
-      
-      graphics::title(main=substitute(paste(bold('FUN(value)'))))
-      
-    }
-    
-    graphics::Axis(side=1, labels=FALSE)
-    
-    graphics::Axis(side=4, labels=FALSE)
-    
-    if(grid==TRUE) graphics::grid()
-    
-    graphics::abline(h=FuzzyNumbers::core(valueZFun), col=4, lty=3)
-    
-    # graphics::par(mfrow = c(1, 1))
-    
+    rightBoundsZFunApproximation <- FuzzyNumbers::alphacut(valueZApproximation, alphas)[,"U"]
     
   }
   
-  # calculate the necessary limits for plots
-  
-  # first x axis
-  
-  listXlim <- lapply(listOfValues, FuzzyNumbers::supp)
-  
-  xlimValAll <- c(min(unlist(listXlim)),max(unlist(listXlim)))
-  
-  # next y axis
-  
-  listZVal <- lapply(listOfValues,ApplyZFunction,FUN,knots,approximation=FALSE,method,...)
-  
-  listYlim <- lapply(listZVal, FuzzyNumbers::supp)
-  
-  ylimValAll <- c(min(unlist(listYlim)),max(unlist(listYlim)))
-  
+  graphics::plot.new()
   
   # prepare animation 
   
-  oopt <- animation::ani.options(interval=sleep, nmax = length(listOfValues))
+  oopt <- animation::ani.options(interval = sleep, nmax = knots + 2)
   
   for(i in seq_len(animation::ani.options("nmax"))) {
     
     grDevices::dev.hold()
     
-    PlotModified(value=listOfValues[[i]],xlimVal1=xlimValAll,ylimVal1=ylimValAll,
-                 FUN=FUN,knots=knots,grid=grid,approximation=approximation,method=method,...)
+    graphics::plot(c(leftBoundsZFun[(knots+3-i):(knots+2)],rev(rightBoundsZFun)[1:i]),c(alphas[(knots+3-i):(knots+2)],rev(alphas)[1:i]),
+         type='l', frame.plot=TRUE,xlim=suppValueZFun, ylim=c(0,1),
+         xlab="x", main=paste0("alpha=",rev(alphas)[i]),ylab="alpha")
+    
+    if(approximation) {
+      
+      # additional figure with approximation
+      
+      graphics::lines(c(leftBoundsZFunApproximation[(knots+3-i):(knots+2)],rev(rightBoundsZFunApproximation)[1:i]),
+                      c(alphas[(knots+3-i):(knots+2)],rev(alphas)[1:i]),type='l', col="green")
+    
+    }
     
     animation::ani.pause()
   }
@@ -257,8 +168,5 @@ AnimateZEP <- function(listOfValues,FUN,knots=10,grid=TRUE,approximation=FALSE,m
   
   animation::ani.options(oopt)
   
-  # graphics::par(mfrow = c(1, 1))
-  
-  # return(0)
   
 }

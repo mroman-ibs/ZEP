@@ -1,7 +1,7 @@
 # Function returns correct values
 
     Code
-      ApplyZFunction(A, FUN = function(x) x^3 + 2 * x^2 - 1)
+      ApplyZEP(A, FUN = function(x) x^3 + 2 * x^2 - 1)
     Output
       Piecewise linear fuzzy number with 10 knot(s),
          support=[-76,8799],
@@ -10,7 +10,7 @@
 ---
 
     Code
-      ApplyZFunction(B, FUN = function(x) sqrt(x))
+      ApplyZEP(B, FUN = function(x) sqrt(x))
     Output
       Piecewise linear fuzzy number with 10 knot(s),
          support=[1,2.82843],
@@ -19,7 +19,7 @@
 ---
 
     Code
-      ApplyZFunction(C, FUN = function(x) x^2 + sin(x))
+      ApplyZEP(C, FUN = function(x) x^2 + sin(x))
     Output
       Piecewise linear fuzzy number with 10 knot(s),
          support=[-0.232466,49.657],
@@ -28,7 +28,7 @@
 ---
 
     Code
-      ApplyZFunction(D, FUN = function(x) x^2 + x - 4)
+      ApplyZEP(D, FUN = function(x) x^2 + x - 4)
     Output
       Piecewise linear fuzzy number with 10 knot(s),
          support=[-2,16],
@@ -37,7 +37,7 @@
 ---
 
     Code
-      ApplyZFunction(A, FUN = function(x) x^3 + 2 * x^2 - 1, approximation = TRUE)
+      ApplyZEP(A, FUN = function(x) x^3 + 2 * x^2 - 1, approximation = TRUE)
     Output
       Trapezoidal fuzzy number with:
          support=[-253.039,3373.62],
@@ -46,7 +46,7 @@
 ---
 
     Code
-      ApplyZFunction(B, FUN = function(x) sqrt(x), approximation = TRUE)
+      ApplyZEP(B, FUN = function(x) sqrt(x), approximation = TRUE)
     Output
       Trapezoidal fuzzy number with:
          support=[1.00397,2.83274],
@@ -55,7 +55,7 @@
 ---
 
     Code
-      ApplyZFunction(C, FUN = function(x) x^2 + sin(x), approximation = TRUE, method = "ExpectedIntervalPreserving")
+      ApplyZEP(C, FUN = function(x) x^2 + sin(x), approximation = TRUE, method = "ExpectedIntervalPreserving")
     Output
       Trapezoidal fuzzy number with:
          support=[0.701674,42.3719],
@@ -64,7 +64,7 @@
 ---
 
     Code
-      ApplyZFunction(D, FUN = function(x) x^2 + x - 4, approximation = TRUE, method = "Naive")
+      ApplyZEP(D, FUN = function(x) x^2 + x - 4, approximation = TRUE, method = "Naive")
     Output
       Trapezoidal fuzzy number with:
          support=[-2,16],

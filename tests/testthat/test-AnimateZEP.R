@@ -18,34 +18,37 @@ test_that("Function reports errors", {
   
   expect_error(AnimateZEP(0.3,FUN=function(x)sqrt(x)),
                
-               "Parameter listOfValues should be a list of fuzzy numbers!")
+               "Parameter value should be a single fuzzy number!")
   
   
+  expect_error(AnimateZEP(c(0.3,0.5,11),FUN=function(x)sqrt(x)),
+               
+               "Parameter value should be a single fuzzy number!")
   
   
-  expect_error(AnimateZEP(list(A,B,C,D),approximation=TRUE,method = "b"),
+  expect_error(AnimateZEP(A,approximation=TRUE,method = "b"),
                
                "Parameter method should be a proper name of approximation method!")
   
-  expect_error(AnimateZEP(list(A,B,C,D),approximation=0.5),
+  expect_error(AnimateZEP(A,approximation=0.5),
                
                "Parameter approximation should be a single logical value!")
   
-  expect_error(AnimateZEP(list(A,B,C,D),FUN=function(x)sqrt(x),approximation=c(TRUE,FALSE)),
+  expect_error(AnimateZEP(A,FUN=function(x)sqrt(x),approximation=c(TRUE,FALSE)),
                
                "Parameter approximation should be a single logical value!")
   
   
-  expect_error(AnimateZEP(list(A,B,C,D),FUN=function(x)sqrt(x),knots = -5),
+  expect_error(AnimateZEP(A,FUN=function(x)sqrt(x),knots = -5),
                
                "Parameter knots should be a single, positive integer value!")
   
-  expect_error(AnimateZEP(list(A,B,C,D),FUN=function(x)sqrt(x),knots = c(2,6)),
+  expect_error(AnimateZEP(A,FUN=function(x)sqrt(x),knots = c(2,6)),
                
                "Parameter knots should be a single, positive integer value!")
   
   
-  expect_error(AnimateZEP(list(A,B,C,D),FUN=function(x)sqrt(x),knots = 0.8),
+  expect_error(AnimateZEP(A,FUN=function(x)sqrt(x),knots = 0.8),
                
                "Parameter knots should be a single, positive integer value!")
   
@@ -53,7 +56,6 @@ test_that("Function reports errors", {
   
   
 })
-
 
 
 

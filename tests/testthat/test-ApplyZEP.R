@@ -19,42 +19,42 @@ test_that("Function returns correct values", {
   
   expect_snapshot(
     
-    {ApplyZFunction(A,FUN=function(x)x^3+2*x^2-1)}
+    {ApplyZEP(A,FUN=function(x)x^3+2*x^2-1)}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(B,FUN=function(x)sqrt(x))}
+    {ApplyZEP(B,FUN=function(x)sqrt(x))}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(C,FUN=function(x)x^2+sin(x))}
+    {ApplyZEP(C,FUN=function(x)x^2+sin(x))}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(D,FUN=function(x)x^2+x-4)}
+    {ApplyZEP(D,FUN=function(x)x^2+x-4)}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)}
+    {ApplyZEP(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(B,FUN=function(x)sqrt(x),approximation=TRUE)}
+    {ApplyZEP(B,FUN=function(x)sqrt(x),approximation=TRUE)}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(C,FUN=function(x)x^2+sin(x),approximation=TRUE,method="ExpectedIntervalPreserving")}
+    {ApplyZEP(C,FUN=function(x)x^2+sin(x),approximation=TRUE,method="ExpectedIntervalPreserving")}
   )
   
   expect_snapshot(
     
-    {ApplyZFunction(D,FUN=function(x)x^2+x-4,approximation=TRUE,method = "Naive")}
+    {ApplyZEP(D,FUN=function(x)x^2+x-4,approximation=TRUE,method = "Naive")}
   )
   
   
@@ -81,39 +81,39 @@ test_that("Function reports errors", {
                                                 knot.n=1, knot.alpha=0.25, knot.left=1.5, knot.right=3.25)
   # tests
   
-  expect_error(ApplyZFunction(0.3,FUN=function(x)sqrt(x)),
+  expect_error(ApplyZEP(0.3,FUN=function(x)sqrt(x)),
                
                "Parameter value should be a single fuzzy number!")
   
   
-  expect_error(ApplyZFunction(c(0.3,0.5,11),FUN=function(x)sqrt(x)),
+  expect_error(ApplyZEP(c(0.3,0.5,11),FUN=function(x)sqrt(x)),
                
                "Parameter value should be a single fuzzy number!")
   
   
-  expect_error(ApplyZFunction(A,approximation=TRUE,method = "b"),
+  expect_error(ApplyZEP(A,approximation=TRUE,method = "b"),
                
                "Parameter method should be a proper name of approximation method!")
   
-  expect_error(ApplyZFunction(A,approximation=0.5),
+  expect_error(ApplyZEP(A,approximation=0.5),
                
                "Parameter approximation should be a single logical value!")
   
-  expect_error(ApplyZFunction(A,FUN=function(x)sqrt(x),approximation=c(TRUE,FALSE)),
+  expect_error(ApplyZEP(A,FUN=function(x)sqrt(x),approximation=c(TRUE,FALSE)),
                
                "Parameter approximation should be a single logical value!")
   
   
-  expect_error(ApplyZFunction(A,FUN=function(x)sqrt(x),knots = -5),
+  expect_error(ApplyZEP(A,FUN=function(x)sqrt(x),knots = -5),
                
                "Parameter knots should be a single, positive integer value!")
   
-  expect_error(ApplyZFunction(A,FUN=function(x)sqrt(x),knots = c(2,6)),
+  expect_error(ApplyZEP(A,FUN=function(x)sqrt(x),knots = c(2,6)),
                
                "Parameter knots should be a single, positive integer value!")
   
   
-  expect_error(ApplyZFunction(A,FUN=function(x)sqrt(x),knots = 0.8),
+  expect_error(ApplyZEP(A,FUN=function(x)sqrt(x),knots = 0.8),
                
                "Parameter knots should be a single, positive integer value!")
   

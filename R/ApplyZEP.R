@@ -1,7 +1,7 @@
 #' Function to apply the Zadeh's principle
 #'
 #' @description
-#' `ApplyZFunction` applies the selected function to a fuzzy number using the Zadeh's principle.
+#' `ApplyZEP` applies the selected function to a fuzzy number using the Zadeh's principle.
 #'
 #' @details
 #' The function takes the input fuzzy number \code{value} (which should be described by one of the 
@@ -55,11 +55,11 @@
 #' 
 #' # find the output via the Zadeh's principle
 #' 
-#' ApplyZFunction(A,FUN=function(x)x^3+2*x^2-1)
+#' ApplyZEP(A,FUN=function(x)x^3+2*x^2-1)
 #'
 #' # find the approximated output via the Zadeh's principle
 #' 
-#' ApplyZFunction(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
+#' ApplyZEP(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
 #' 
 #'
 #' @export
@@ -67,7 +67,7 @@
 
 # apply function to FN via the Zadeh's principle
 
-ApplyZFunction <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",...)
+ApplyZEP <- function(value,FUN,knots=10,approximation=FALSE,method="NearestEuclidean",...)
 {
   # checking parameters
   

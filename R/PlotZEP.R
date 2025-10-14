@@ -1,7 +1,7 @@
 #' Plot input and output for the Zadeh's principle
 #'
 #' @description
-#' `PlotZFunction` applies the selected function to a fuzzy number using the Zadeh's principle, and plots
+#' `PlotZEP` applies the selected function to a fuzzy number using the Zadeh's principle, and plots
 #' the input and output.
 #'
 #' @details
@@ -67,11 +67,11 @@
 #' 
 #' # plot the figures
 #' 
-#' PlotZFunction(A,FUN=function(x)x^3+2*x^2-1)
+#' PlotZEP(A,FUN=function(x)x^3+2*x^2-1)
 #'
 #' # find and plot the approximated output via the Zadeh's principle
 #' 
-#' PlotZFunction(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
+#' PlotZEP(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
 #' 
 #'
 #' @export
@@ -80,7 +80,7 @@
 
 # main function to plot input and output for function with the Zadeh's principle
 
-PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approximation=FALSE,xRange=NA,yRange=NA,method="NearestEuclidean",...)
+PlotZEP <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approximation=FALSE,xRange=NA,yRange=NA,method="NearestEuclidean",...)
 {
   # checking parameters
   
@@ -158,7 +158,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     if(grid==TRUE) graphics::grid()
     
-    outputFunction <- ApplyZFunction(value,FUN = FUN, knots = knots)
+    outputFunction <- ApplyZEP(value,FUN = FUN, knots = knots)
     
     if(anyNA(yRange)) {
       
@@ -178,7 +178,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     if(approximation) {
       
-      outputFunctionApprox <- ApplyZFunction(value,FUN = FUN, knots = knots,approximation = TRUE,method=method,...)
+      outputFunctionApprox <- ApplyZEP(value,FUN = FUN, knots = knots,approximation = TRUE,method=method,...)
       
       if(anyNA(yRange)) {
         
@@ -242,7 +242,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     # prepare the second figure
     
-    valueZFun <- ApplyZFunction(value,FUN=FUN,knots=knots,approximation=FALSE,
+    valueZFun <- ApplyZEP(value,FUN=FUN,knots=knots,approximation=FALSE,
                                 method=method,...)
     
     suppValueZFun <- FuzzyNumbers::supp(valueZFun)
@@ -251,7 +251,7 @@ PlotZFunction <- function(value,FUN,knots=10,grid=TRUE,alternate=FALSE,approxima
     
     if(approximation) {
       
-      valueZApproximation <- ApplyZFunction(value,FUN=FUN,knots=knots,approximation=TRUE,
+      valueZApproximation <- ApplyZEP(value,FUN=FUN,knots=knots,approximation=TRUE,
                                             method=method,...)
       
       suppValueZFunApprox <- FuzzyNumbers::supp(valueZApproximation)

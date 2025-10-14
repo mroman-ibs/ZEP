@@ -2,27 +2,24 @@
 % Please edit documentation in R/AnimateZEP.R
 \name{AnimateZEP}
 \alias{AnimateZEP}
-\title{Function for animation of the whole list of fuzzy numbers}
+\title{Animate output for the Zadeh's principle}
 \usage{
 AnimateZEP(
-  listOfValues,
+  value,
   FUN,
   knots = 10,
-  grid = TRUE,
   approximation = FALSE,
   method = "NearestEuclidean",
-  sleep = 1,
+  sleep = 0.05,
   ...
 )
 }
 \arguments{
-\item{listOfValues}{List of the input fuzzy numbers.}
+\item{value}{Input fuzzy number.}
 
 \item{FUN}{Function used for the input fuzzy number with the help of the Zadeh's principle.}
 
 \item{knots}{Number of the alpha-cuts used during calculation of the output.}
-
-\item{grid}{If \code{TRUE}, then additional grid is plotted.}
 
 \item{approximation}{If \code{TRUE}, the approximated output is calculated.}
 
@@ -33,49 +30,44 @@ AnimateZEP(
 \item{...}{Additional parameters passed to other functions.}
 }
 \value{
-The figures are animated: the series of the input and output fuzzy numbers (for the Zadeh's principle
-and the applied function) or their approximation (if selected).
+One (or two) figures are animated: the output fuzzy number (for the Zadeh's principle
+and the applied function), and its approximation (if selected).
 }
 \description{
-\code{AnimateZEP} animates the whole list consisting of fuzzy numbers.
+\code{AnimateZEP} applies the selected function to a fuzzy number using the Zadeh's principle, and then animates
+the output.
 }
 \details{
-The function takes the list of input fuzzy numbers \code{listOfValues} (which should be described by one of the
+The function takes the input fuzzy number \code{value} (which should be described by one of the
 classes from \code{FuzzyNumbers} package) and applies the function \code{FUN} using
-the Zadeh's principle. The output is given as animation of consecutive fuzzy numbers or their approximations (when
+the Zadeh's principle. The output is given by a fuzzy number or its approximation (when
 \code{approximation} is set to \code{TRUE} and the respective \code{method} is selected).
-To properly find the output, value of \code{FUN} is calculated for many alpha-cuts of \code{listOfValues}.
+To properly find the output, value of \code{FUN} is calculated for many alpha-cuts of \code{value}.
 The number of these alpha-cuts is equal to \code{knots} (plus 2 for the support and the core).
+The output fuzzy number and its approximation are animated for the decreasing value of \code{alpha} (i.e., the consecutive alpha-cuts).
 If the approximation is used, then the approximated fuzzy number is shown with green line.
 
-The input fuzzy number from a list \code{listOfValues} should be given by fuzzy number described by classes from \code{FuzzyNumbers} package.
+The input fuzzy number \code{value} should be given by fuzzy number described by classes from \code{FuzzyNumbers} package.
 }
 \examples{
 
 library(FuzzyNumbers)
 
-# prepare list of fuzzy numbers
+# prepare complex fuzzy number
 
-a <- seq(0,5,by=1)
+A <- FuzzyNumber(-5, 3, 6, 20, left=function(x)
+pbeta(x,0.4,3),
+right=function(x) 1-x^(1/4),
+lower=function(alpha) qbeta(alpha,0.4,3),
+upper=function(alpha) (1-alpha)^4)
 
-fuzzyList <- list()
+# animate the output fuzzy number
 
-for (i in 1:length(a)) {
- 
- fuzzyList[[i]] <- TrapezoidalFuzzyNumber(i,i+1,2*i+1,3*i+1)
- 
-}
+AnimateZEP(A,FUN=function(x)x^3+2*x^2-1)
 
-# check the list
-fuzzyList
+# find and animate the approximated output via the Zadeh's principle
 
-# now some animations for various functions and then with approximation
-AnimateZEP(fuzzyList,FUN=function(x) x^2)
-
-AnimateZEP(fuzzyList,FUN=function(x) sin(x))
-
-AnimateZEP(fuzzyList,FUN=function(x) x^3+1,approximation = TRUE)
-
+AnimateZEP(A,FUN=function(x)x^3+2*x^2-1,approximation=TRUE)
 
 
 
